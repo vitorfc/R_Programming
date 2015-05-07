@@ -1,0 +1,186 @@
+criando vetor
+x <-c(17, 14, 4, 5, 13, 12, 10)
+
+
+alterando os items maiores que 10 para 4
+
+x[x >10] <-4
+
+
+setando diretorio padrao
+setwd("D:/R")
+
+carregando base csv
+base<-read.csv("hw1_data.csv")
+
+outros parametros
+
+,header=TRUE, sep=","
+
+qtde de registros do dataframe
+nrow(base)
+[1] 153
+
+tipo do objeto
+class(base)
+[1] "data.frame"
+
+
+trazer um item especifico
+base[47,]
+   Ozone Solar.R Wind Temp Month Day
+47    21     191 14.9   77     6  16
+
+> basenula<-is.na(base)
+
+> head(basenula)
+     Ozone Solar.R  Wind  Temp Month   Day
+[1,] FALSE   FALSE FALSE FALSE FALSE FALSE
+[2,] FALSE   FALSE FALSE FALSE FALSE FALSE
+[3,] FALSE   FALSE FALSE FALSE FALSE FALSE
+[4,] FALSE   FALSE FALSE FALSE FALSE FALSE
+[5,]  TRUE    TRUE FALSE FALSE FALSE FALSE
+[6,] FALSE    TRUE FALSE FALSE FALSE FALSE
+
+
+Cria vetor com os Null Values na coluna Ozone
+tira<-is.na(base$Ozone)
+> tira
+  [1] FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+ [21] FALSE FALSE FALSE FALSE  TRUE  TRUE  TRUE FALSE FALSE FALSE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE  TRUE FALSE
+ [41] FALSE  TRUE  TRUE FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+ [61]  TRUE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE
+ [81] FALSE FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[101] FALSE  TRUE  TRUE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE  TRUE FALSE
+[121] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[141] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE
+
+
+> basecomna<-base[tira,]
+> nrow(basecomna)
+[1] 37
+
+cria vetor excluindo os NAs
+basesemna<-base[!tira,]
+
+
+aplica Média na coluna Ozone
+> mean(basesemna$Ozone)
+[1] 42.12931
+
+
+> basesample<-basesemna[basesemna$Ozone>31,]
+> basesample<-basesample[basesample$Temp>90,]
+> basesample
+    Ozone Solar.R Wind Temp Month Day
+69     97     267  6.3   92     7   8
+70     97     272  5.7   92     7   9
+120    76     203  9.7   97     8  28
+121   118     225  2.3   94     8  29
+122    84     237  6.3   96     8  30
+123    85     188  6.3   94     8  31
+124    96     167  6.9   91     9   1
+125    78     197  5.1   92     9   2
+126    73     183  2.8   93     9   3
+127    91     189  4.6   93     9   4
+> mean(basesample$Solar.R)
+[1] 212.8ç
+
+
+> basemes<-base[base$Month==6,]
+> mean(basemes$Temp)
+[1] 79.1
+
+> basemes<-basesemna[basesemna$Month==5,]
+> max(basemes$Ozone)
+[1] 115
+
+
+
+-----------------------------------------------------------------
+
+Cleaning Data Quiz 1
+
+https://d396qusza40orc.cloudfront.net/getdata%2Fdata%2Fss06hid.csv
+
+> url<-"https://d396qusza40orc.cloudfront.net/getdata%2Fdata%2Fss06hid.csv"
+> base1<-read.csv(url,sep=",",header=TRUE)
+
+> nrow(base1)
+[1] 6496
+
+> head(base1,2)
+  RT SERIALNO DIVISION PUMA REGION ST  ADJUST WGTP NP TYPE ACR AGS BDS BLD BUS CONP ELEP FS FULP GASP HFL INSP KIT MHP MRGI
+1  H      186        8  700      4 16 1015675   89  4    1   1  NA   4   2   2   NA  180  0    2    3   3  600   1  NA    1
+2  H      306        8  700      4 16 1015675  310  1    1  NA  NA   1   7  NA   NA   60  0    2    3   3   NA   1  NA   NA
+  MRGP MRGT MRGX PLM RMS RNTM RNTP SMP TEL TEN VACS VAL VEH WATP YBL FES  FINCP FPARC GRNTP GRPIP HHL HHT  HINCP HUGCL HUPAC
+1 1300    1    1   1   9   NA   NA  NA   1   1   NA  17   3  840   5   2 105600     2    NA    NA   1   1 105600     0     2
+2   NA   NA   NA   1   2    2  600  NA   1   3   NA  NA   1    1   3  NA     NA    NA   660    23   1   4  34000     0     4
+  HUPAOC HUPARC LNGI MV NOC NPF NPP NR NRC OCPIP PARTNER PSF R18 R60 R65 RESMODE SMOCP SMX SRNT SVAL TAXP WIF WKEXREL
+1      2      2    1  4   2   4   0  0   2    18       0   0   1   0   0       1  1550   3    0    1   24   3       2
+2      4      4    1  3   0  NA   0  0   0    NA       0   0   0   0   0       2    NA  NA    1    0   NA  NA      NA
+  WORKSTAT FACRP FAGSP FBDSP FBLDP FBUSP FCONP FELEP FFSP FFULP FGASP FHFLP FINSP FKITP FMHP FMRGIP FMRGP FMRGTP FMRGXP FMVYP
+1        3     0     0     0     0     0     0     0    0     0     0     0     0     0    0      0     0      0      0     0
+2       NA     0     0     0     0     0     0     0    0     0     0     0     0     0    0      0     0      0      0     0
+  FPLMP FRMSP FRNTMP FRNTP FSMP FSMXHP FSMXSP FTAXP FTELP FTENP FVACSP FVALP FVEHP FWATP FYBLP wgtp1 wgtp2 wgtp3 wgtp4 wgtp5
+1     0     0      0     0    0      0      0     0     0     0      0     0     0     0     0    87    28   156    95    26
+2     0     0      0     0    0      0      0     0     0     0      0     0     0     0     1   539   363   293   422   566
+  wgtp6 wgtp7 wgtp8 wgtp9 wgtp10 wgtp11 wgtp12 wgtp13 wgtp14 wgtp15 wgtp16 wgtp17 wgtp18 wgtp19 wgtp20 wgtp21 wgtp22 wgtp23
+1    25    95    93    93     91     87    166     90     25    153     89    148     82     25    180     90     24    140
+2   289    87   242   453    453    334    358    414    102    281     99    108    278    131    407    447    264    352
+  wgtp24 wgtp25 wgtp26 wgtp27 wgtp28 wgtp29 wgtp30 wgtp31 wgtp32 wgtp33 wgtp34 wgtp35 wgtp36 wgtp37 wgtp38 wgtp39 wgtp40
+1     92     25     27     86     84     87     93     90    149     91     28    143     81    144     95     27     22
+2    238    390    336    122    374    482    468    335    251    613    104    284    116     91    326    102    361
+  wgtp41 wgtp42 wgtp43 wgtp44 wgtp45 wgtp46 wgtp47 wgtp48 wgtp49 wgtp50 wgtp51 wgtp52 wgtp53 wgtp54 wgtp55 wgtp56 wgtp57
+1     90    171     27     83    153    148     92     91     91     93     90     26     94    142     24     91     29
+2    107    253    321    289     96    343    564    274    118    118    321    261    130    463    294    479    391
+  wgtp58 wgtp59 wgtp60 wgtp61 wgtp62 wgtp63 wgtp64 wgtp65 wgtp66 wgtp67 wgtp68 wgtp69 wgtp70 wgtp71 wgtp72 wgtp73 wgtp74
+1     84    148     30     93    143     24     88    147    145     91     83     83     86     81     27     93    151
+2    307    476    283    116    353    323    374    106    236    380    313     90     94    292    401     81    494
+  wgtp75 wgtp76 wgtp77 wgtp78 wgtp79 wgtp80
+1     28     79     25    101    157    129
+2    346    496    615    286    454    260
+
+How many properties are worth $1,000,000 or more?
+
+Val>=1.000.000 = Value 24
+
+tira<-is.na(base1$VAL)
+> basevalok<-base1[!tira,]
+> nrow(basevalok)
+[1] 4420
+> nrow(base1)
+[1] 6496
+> nrow(basevalok[basevalok$VAL==24,])
+[1] 53
+
+Question 2
+
+https://d396qusza40orc.cloudfront.net/getdata%2Fdata%2FDATA.gov_NGAP.xlsx
+
+url="https://d396qusza40orc.cloudfront.net/getdata%2Fdata%2FDATA.gov_NGAP.xlsx"
+
+
+Question 3
+
+https://d396qusza40orc.cloudfront.net/getdata%2Fdata%2Fss06pid.csv
+
+url="https://d396qusza40orc.cloudfront.net/getdata%2Fdata%2Fss06pid.csv"
+
+> DT<-read.csv(url)
+> nrow(DT)
+[1] 14931
+
+tapply(DT$pwgtp15,DT$SEX,mean)
+
+mean(DT[DT$SEX==1,]$pwgtp15);
+mean(DT[DT$SEX==2,]$pwgtp15);
+
+rowMeans(DT)[DT$SEX==1];
+rowMeans(DT)[DT$SEX==2];
+
+DT[,mean(pwgtp15),by=SEX]
+
+sapply(split(DT$pwgtp15,DT$SEX),mean)
+
+mean(DT$pwgtp15,by=DT$SEX)
